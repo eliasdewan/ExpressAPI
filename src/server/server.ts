@@ -5,8 +5,9 @@ import cors from 'cors';
 
 import { ServerConfig } from 'src/types/server.config';
 import { errorHandler } from './middlewares/error.middleware';
-import { ApiRouter } from '../api';
-import swaggerOutput from '../swagger_output.json';
+import { registerRoutes } from '../api';
+import swaggerOutput from '../swagger-output.json';
+import mongoose from 'mongoose';
 
 export default class Server {
   app: express.Application;
@@ -16,6 +17,7 @@ export default class Server {
   constructor() {
     this.app = express();
     this.config = process.env as any;
+    this.apiRouter = Router();
 
     // Register middlewares into the server
     this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,13 +34,19 @@ export default class Server {
     this.app.use(errorHandler);
 
     // Register Routing and Swagger
-    this.app.use('/', ApiRouter);
+    this.app.use('/api', this.apiRouter);
+    registerRoutes(this.apiRouter);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
   }
 
   start() {
     this.app.listen(this.config.PORT, () => {
       console.log(`${new Date()}: Server is running at http://localhost:${this.config.PORT}`);
+
+      mongoose
+        .connect(this.config.MONGO_URL)
+        .then(() => console.log('Database connected.'))
+        .catch((error) => console.log(error));
     });
   }
 }

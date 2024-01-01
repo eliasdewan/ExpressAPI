@@ -1,0 +1,182 @@
+{
+    "authors": [
+        {
+            "first_name": "Foster",
+            "last_name": "Dignall",
+            "age": 31,
+            "email": "fdignall0@miitbeian.gov.cn",
+            "country": "Philippines",
+            "language": "Bislama",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Abbe",
+            "last_name": "Gazey",
+            "age": 28,
+            "email": "agazey1@alibaba.com",
+            "country": "China",
+            "language": "Fijian",
+            "died": "2023-05-23",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Ebeneser",
+            "last_name": "Leamy",
+            "age": 26,
+            "email": "eleamy2@umich.edu",
+            "country": "Indonesia",
+            "language": "Punjabi",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Claire",
+            "last_name": "Clayson",
+            "age": 55,
+            "email": "cclayson3@exblog.jp",
+            "country": "Cuba",
+            "language": "Filipino",
+            "died": "2023-10-03",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Yehudi",
+            "last_name": "Vicarey",
+            "age": 40,
+            "email": "yvicarey4@marketwatch.com",
+            "country": "Philippines",
+            "language": "Quechua",
+            "died": "2023-05-17",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Keith",
+            "last_name": "Inchley",
+            "age": 64,
+            "email": "kinchley5@edublogs.org",
+            "country": "South Africa",
+            "language": "Polish",
+            "died": "2023-05-20",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Abbie",
+            "last_name": "Hagan",
+            "age": 48,
+            "email": "ahagan6@ocn.ne.jp",
+            "country": "Peru",
+            "language": "Finnish",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Lizette",
+            "last_name": "Parradye",
+            "age": 71,
+            "email": "lparradye7@wisc.edu",
+            "country": "China",
+            "language": "Arabic",
+            "gender": "Agender"
+        },
+        {
+            "first_name": "Adda",
+            "last_name": "Attree",
+            "age": 52,
+            "email": "aattree8@scribd.com",
+            "country": "Argentina",
+            "language": "Kurdish",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Liane",
+            "last_name": "Rickets",
+            "age": 79,
+            "email": "lrickets9@harvard.edu",
+            "country": "Portugal",
+            "language": "Malagasy",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Tamara",
+            "last_name": "Lyman",
+            "age": 51,
+            "email": "tlymana@indiegogo.com",
+            "country": "Indonesia",
+            "language": "Swahili",
+            "died": "2023-08-27",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Morganica",
+            "last_name": "Milner",
+            "age": 44,
+            "email": "mmilnerb@hugedomains.com",
+            "country": "North Korea",
+            "language": "Gujarati",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Leshia",
+            "last_name": "Chasen",
+            "age": 25,
+            "email": "lchasenc@pagesperso-orange.fr",
+            "country": "China",
+            "language": "Czech",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Anson",
+            "last_name": "MacNair",
+            "age": 30,
+            "email": "amacnaird@boston.com",
+            "country": "Armenia",
+            "language": "Swati",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Sabina",
+            "last_name": "Milvarnie",
+            "age": 56,
+            "email": "smilvarniee@samsung.com",
+            "country": "Poland",
+            "language": "Swahili",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Aurel",
+            "last_name": "Le Franc",
+            "age": 42,
+            "email": "alefrancf@issuu.com",
+            "country": "Botswana",
+            "language": "Persian",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Aland",
+            "last_name": "Hinkes",
+            "age": 30,
+            "email": "ahinkesg@squidoo.com",
+            "country": "Poland",
+            "language": "Swedish",
+            "died": "2023-04-09",
+            "gender": "Male"
+        },
+        {
+            "first_name": "Ellene",
+            "last_name": "Huband",
+            "age": 67,
+            "email": "ehubandh@virginia.edu",
+            "country": "China",
+            "language": "Armenian",
+            "gender": "Female"
+        },
+        {
+            "first_name": "Fons",
+            "last_name": "Lilburne",
+            "age": 41,
+            "email": "flilburnei@eventbrite.com",
+            "country": "Philippines",
+            "language": "Telugu",
+            "died": "2023-04-09",
+            "gender": "Male"
+        }
+    ]
+}

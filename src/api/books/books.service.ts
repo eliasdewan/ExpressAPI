@@ -10,8 +10,10 @@ class BooksService {
     this.books = list;
   }
 
-  getBooks(): ApiResponse<Book> {
-    return { success: true, result: this.books };
+  getBooks(page: number, limit: number): ApiResponse<Book> {
+    const items = this.books.slice((page - 1) * limit, page * limit);
+    const pages = Math.ceil(this.books.length / limit);
+    return { success: true, result: { items, pages, page, limit } };
   }
 
   getBook(id: string): ApiResponse<Book> {

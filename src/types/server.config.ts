@@ -4,4 +4,5 @@ export type ServerConfig = {
   NODE_ENV: string;
   PORT: number;
   API_PREFIX: string;
+  MONGO_URL: string;
 };

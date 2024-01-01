@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { validationMiddleware } from '../../common/middlewares/validation.middleware';
+import { validationMiddleware } from '../../common/middlewares/validation';
 import { Book, BookUpdatePayload } from './book';
 import { BookDto } from './dtos/book.dto';
 import { booksService } from './books.service';
 
 class BooksController {
-  public apiPrefix = '';
+  public apiPrefix = '/books';
   public router = Router();
 
   constructor() {
@@ -19,7 +19,8 @@ class BooksController {
    * @param res Response
    */
   getAllBooks(req: Request, res: Response) {
-    res.send(booksService.getBooks());
+    const { page = 1, limit = 3 } = req.query;
+    res.send(booksService.getBooks(+page, +limit));
   }
 
   /**

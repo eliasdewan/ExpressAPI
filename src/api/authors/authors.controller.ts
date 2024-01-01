@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { validationMiddleware } from '../../common/middlewares/validation.middleware';
+import { validationMiddleware } from '../../common/middlewares/validation';
 import { Author, AuthorUpdatePayload } from './author';
 import { AuthorDto } from './author.dto';
 import { authorsService } from './authors.service';
 
 class AuthorsController {
-  public apiPrefix = '';
+  public apiPrefix = '/authors';
   public router = Router();
 
   constructor() {
