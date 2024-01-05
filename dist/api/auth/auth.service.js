@@ -9,16 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validationMiddleware = void 0;
-const validation_pipe_1 = require("../pipes/validation.pipe");
-const validationMiddleware = (validationSchema) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, validation_pipe_1.validationPipe)(validationSchema, Object.assign(Object.assign({}, req.body), req.params));
-    if (result.length) {
-        const formatted = result.map((e) => (Object.assign({ property: e.property }, e.constraints)));
-        return res.status(400).json({ sucess: false, result: formatted });
+exports.authService = void 0;
+const user_schema_1 = require("../../database/models/user.schema");
+class AuthService {
+    constructor() {
     }
-    next();
-    return true;
-});
-exports.validationMiddleware = validationMiddleware;
-//# sourceMappingURL=validation.js.map
+    register(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield user_schema_1.UserModel.create(payload);
+                return { success: true, result: user.profile };
+            }
+            catch (error) {
+                console.log(error);
+                return { success: true, error: 'user registration failed' };
+            }
+        });
+    }
+}
+exports.authService = new AuthService();
+//# sourceMappingURL=auth.service.js.map

@@ -8,5 +8,6 @@ export type PaginatedResults<T> = {
 export type ApiResponse<T> = {
   success: boolean;
   message?: string;
-  result: PaginatedResults<T> | T | T[] | null;
+  result?: PaginatedResults<T> | T | T[] | null;
+  error?: any;
 };
