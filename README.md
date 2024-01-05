@@ -1,4 +1,4 @@
-# Nodejs, Express, Typescript Lessson-1
+# Nodejs, Express, Typescript Lessson-2
 
 This is the first attempt toward learning Nodejs
 
