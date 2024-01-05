@@ -1,9 +1,8 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import { Address, Authentication, UserProfile } from 'src/api/auth/data/user';
+import mongoose, { Document, Model, Schema, model } from 'mongoose';
+import { compare, compareSync, genSaltSync, hashSync } from 'bcrypt';
+import { Address, Authentication, UserProfile } from '../../api/auth/data/user';
 
-import { genSaltSync, hashSync } from 'bcrypt-ts';
-
-export interface IUser extends Document {
+export interface IUser {
   username: string;
   email: string;
   mobile: string;
@@ -12,7 +11,16 @@ export interface IUser extends Document {
   authentication: Authentication;
 }
 
-const UserSchema: Schema<IUser> = new mongoose.Schema(
+export interface UserDocument extends IUser, Document {}
+
+export interface UserModel extends Model<UserDocument> {
+  userExist(username: string): UserDocument;
+  findUser(): UserDocument;
+  searchUsers(): UserDocument[];
+  comparePasswords(password: string, hash: string): Promise<boolean>;
+}
+
+const UserSchema: Schema<UserDocument, UserModel> = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
@@ -39,7 +47,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.pre<IUser>('save', function (this: IUser, next) {
+UserSchema.pre<UserDocument>('save', function (this: UserDocument, next) {
   if (this.isModified('authentication.password')) {
     const salt = genSaltSync(10);
     const hash = hashSync(this.authentication.password, salt);
@@ -49,4 +57,33 @@ UserSchema.pre<IUser>('save', function (this: IUser, next) {
   }
 });
 
-export const UserModel = mongoose.model('User', UserSchema);
+UserSchema.methods.generateHash = function (password: string) {
+  const salt = genSaltSync(10);
+  return hashSync(password, salt);
+};
+
+UserSchema.methods.isPasswordValid = function (password: string) {
+  return compareSync(password, this.authentication.password);
+};
+
+UserSchema.statics.userExist = async function (this: Model<UserDocument>, username: string) {
+  return this.findOne({ $or: [{ username }, { email: username }] });
+};
+
+UserSchema.statics.findUser = async function (this: Model<UserDocument>, id: string) {
+  return this.findById(id);
+};
+
+UserSchema.statics.searchUsers = async function (this: Model<UserDocument>, query: string) {
+  return this.find({ 'profile.firstName': { $regex: query, $options: 'i' } });
+};
+
+UserSchema.statics.comparePasswords = async function (password: string, hash: string) {
+  return compare(password, hash);
+};
+
+UserSchema.virtual('fullName').get(function (): string {
+  return `${this.profile.firstName.trim()} ${this.profile.middleName.trim()} ${this.profile.lastName.trim()}`;
+});
+
+export const User = model<UserDocument, UserModel>('User', UserSchema);

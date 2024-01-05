@@ -42,7 +42,7 @@ export default class Server {
   start() {
     this.app.listen(this.config.PORT, () => {
       console.log(`${new Date()}: Server is running at http://localhost:${this.config.PORT}`);
-
+      console.log(this.config.MONGO_URL);
       mongoose
         .connect(this.config.MONGO_URL)
         .then(() => console.log('Database connected.'))

@@ -33,15 +33,14 @@ class AuthController {
   }
 
   /**
-   * @url api/books/{id}
-   * @method GET
+   * @url api/auth/login
+   * @method POST
    * @param req Reqest
    * @param res Response
    */
-  // getBook(req: Request, res: Response) {
-  //   const { id } = req.params;
-  //   res.send(booksService.getBook(id));
-  // }
+  async login(req: Request, res: Response) {
+    res.send(await authService.signin(req.body));
+  }
 
   /**
    * @url api/books
@@ -85,7 +84,7 @@ class AuthController {
 
   private intialize() {
     this.router.post(`${this.apiPrefix}/register`, validationMiddleware(RegisterUserDto), this.registerUser);
-    // this.router.get(`${this.apiPrefix}/:id`, this.getBook);
+    this.router.post(`${this.apiPrefix}/signin`, this.login);
     // this.router.post(`${this.apiPrefix}`, validationMiddleware(BookDto), this.addBook);
     // this.router.put(`${this.apiPrefix}/:id`, this.updateBook);
     // this.router.delete(`${this.apiPrefix}/:id`, this.removeBook);

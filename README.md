@@ -89,3 +89,5 @@ Server config types
   - Use the database created Iuser interface from database model and create using the model. 
 
 - > Login with dto with Login response and Auth response
+ - env JWT_SECRET generatorscript 
+ `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
