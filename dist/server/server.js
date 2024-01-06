@@ -50,8 +50,8 @@ class Server {
         });
         this.app.use(error_middleware_1.errorHandler);
         this.app.use('/api', this.apiRouter);
-        (0, api_1.registerRoutes)(this.apiRouter);
         this.app.use('/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_output_json_1.default));
+        (0, api_1.registerRoutes)(this.apiRouter);
     }
     start() {
         this.app.listen(this.config.PORT, () => {

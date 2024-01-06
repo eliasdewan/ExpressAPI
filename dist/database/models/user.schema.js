@@ -39,6 +39,10 @@ const UserSchema = new mongoose_1.default.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     mobile: String,
+    authentication: {
+        password: { type: String, required: true, selected: false },
+        lastChanged: { type: Date, selected: false }
+    },
     profile: {
         firstName: { type: String, required: true },
         middleName: String,
@@ -52,10 +56,6 @@ const UserSchema = new mongoose_1.default.Schema({
         county: String,
         city: { type: String, required: true },
         postcode: { type: String, required: true }
-    },
-    authentication: {
-        password: { type: String, required: true, selected: false },
-        lastChanged: { type: Date, selected: false }
     }
 }, { timestamps: true });
 UserSchema.pre('save', function (next) {

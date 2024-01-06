@@ -40,6 +40,14 @@ class AuthService {
     }
     register(payload) {
         return __awaiter(this, void 0, void 0, function* () {
+            const usernameTaken = yield user_schema_1.User.userExist(payload.username);
+            const emailTaken = yield user_schema_1.User.userExist(payload.email);
+            if (!!usernameTaken || !!emailTaken) {
+                const reaason = usernameTaken ? 'username' : 'email';
+                const reasonVal = usernameTaken ? payload.username : payload.email;
+                const errorMessage = `${reaason} ${reasonVal}, already taken, try another option`;
+                return { success: false, error: errorMessage };
+            }
             try {
                 const user = yield user_schema_1.User.create(payload);
                 return { success: true, result: user.profile };

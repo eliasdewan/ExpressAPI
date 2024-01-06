@@ -6,7 +6,7 @@ export const validationMiddleware =
     const result: any = await validationPipe(validationSchema, { ...req.body, ...req.params });
     if (result.length) {
       const formatted = result.map((e: any) => ({ property: e.property, ...e.constraints }));
-      return res.status(400).json({ sucess: false, result: formatted });
+      res.status(400).send({ sucess: false, errors: formatted });
     }
 
     next();

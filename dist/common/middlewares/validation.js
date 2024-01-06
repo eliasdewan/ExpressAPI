@@ -15,7 +15,7 @@ const validationMiddleware = (validationSchema) => (req, res, next) => __awaiter
     const result = yield (0, validation_pipe_1.validationPipe)(validationSchema, Object.assign(Object.assign({}, req.body), req.params));
     if (result.length) {
         const formatted = result.map((e) => (Object.assign({ property: e.property }, e.constraints)));
-        return res.status(400).json({ sucess: false, result: formatted });
+        res.status(400).send({ sucess: false, errors: formatted });
     }
     next();
     return true;

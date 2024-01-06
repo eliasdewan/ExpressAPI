@@ -20,7 +20,7 @@ class AuthController {
    * @param req Reqest
    * @param res Response
    */
-  registerUser(req: Request, res: Response) {
+  async registerUser(req: Request, res: Response) {
     const { username, authentication, profile, email, address } = req.body as RegisterUserDto;
     //const payload:RegisterUserRequest = req.body as RegisterUserDto;
     const payload: RegisterUserRequest = {
@@ -30,7 +30,7 @@ class AuthController {
       profile,
       address
     };
-    const result = authService.register(payload);
+    const result = await authService.register(payload);
     res.send(result);
   }
 

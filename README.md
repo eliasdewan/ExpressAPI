@@ -74,20 +74,35 @@ Server config types
 
 - > Database
 
-  - create a new interface Iuser excluding _id, iclude all the user fields fields and extend Document from mongoose import
+  - create a new interface Iuser excluding \_id, iclude all the user fields fields and extend Document from mongoose import
   - create shema of Type Schema<interface exteding Document>
 
- > For each functionalty use dto to check
-  - > Authentication controller, service, dto
-  - >Register is part of **Authentication**, create authentication controller
-  - export controller , import in index in /src and use register routes that server uses to pass router. router.use(controller) ( It could be just passed to the server and it could use directly)
-  - Controller calls validation and service with DTO first then service 
-  - the registeruserdto contains multiple dto classes and they check @validation nested and also 
-  - > Authentication service exports authentication instance
-  - Might store the users , but database stores 
-  - ?? Check parameter of a created type with a create-user.request type? 
-  - Use the database created Iuser interface from database model and create using the model. 
+> For each functionalty use dto to check
+
+- > Authentication controller, service, dto
+- > Register is part of **Authentication**, create authentication controller
+- export controller , import in index in /src and use register routes that server uses to pass router. router.use(controller) ( It could be just passed to the server and it could use directly)
+- Controller calls validation and service with DTO first then service
+- the registeruserdto contains multiple dto classes and they check @validation nested and also
+- > Authentication service exports authentication instance
+- Might store the users , but database stores
+- ?? Check parameter of a created type with a create-user.request type?
+- Use the database created Iuser interface from database model and create using the model.
 
 - > Login with dto with Login response and Auth response
- - env JWT_SECRET generatorscript 
- `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+- env JWT_SECRET generatorscript
+- `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+
+# Changes made, updated for one model
+
+- > User.ts nesting all items as database schema
+- Removed unused inteface User, to replace with BaseUser without \_id and Types mongoose import
+- > Register-user request doesnt have salt and follwows BaseUser format
+- > Register-user DTO  follows the same nesting format as BaseUser
+- > User schema uses BaseUser and can also use User with _id . UserDocument extends BaseUser
+
+ # Extra added
+- > Auth controller uses the validator method with loginDto
+- > registerUser uses userExist method to check if username or email alaready exists
+
+# Consider username and email lowercase

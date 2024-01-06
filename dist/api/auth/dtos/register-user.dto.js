@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterUserDto = exports.AddressDto = exports.UserProfileDto = void 0;
+exports.RegisterUserDto = exports.AuthenticationDto = exports.AddressDto = exports.UserProfileDto = void 0;
 const class_validator_1 = require("class-validator");
 class UserProfileDto {
 }
@@ -64,6 +64,15 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AddressDto.prototype, "postcode", void 0);
+class AuthenticationDto {
+}
+exports.AuthenticationDto = AuthenticationDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Matches)(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' }),
+    __metadata("design:type", String)
+], AuthenticationDto.prototype, "password", void 0);
 class RegisterUserDto {
 }
 exports.RegisterUserDto = RegisterUserDto;
@@ -75,20 +84,18 @@ __decorate([
     __metadata("design:type", String)
 ], RegisterUserDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Matches)(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' }),
-    __metadata("design:type", String)
-], RegisterUserDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.ValidateNested)(),
-    __metadata("design:type", UserProfileDto)
-], RegisterUserDto.prototype, "profile", void 0);
-__decorate([
     (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RegisterUserDto.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)(),
+    __metadata("design:type", AuthenticationDto)
+], RegisterUserDto.prototype, "authentication", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)(),
+    __metadata("design:type", UserProfileDto)
+], RegisterUserDto.prototype, "profile", void 0);
 __decorate([
     (0, class_validator_1.ValidateNested)(),
     __metadata("design:type", AddressDto)

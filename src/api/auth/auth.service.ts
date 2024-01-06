@@ -9,6 +9,14 @@ class AuthService {
   }
 
   async register(payload: RegisterUserRequest) {
+    const usernameTaken: UserDocument = await User.userExist(payload.username);
+    const emailTaken: UserDocument = await User.userExist(payload.email);
+    if (!!usernameTaken || !!emailTaken) {
+      const reaason = usernameTaken ? 'username' : 'email';
+      const reasonVal = usernameTaken ? payload.username : payload.email;
+      const errorMessage = `${reaason} ${reasonVal}, already taken, try another option`;
+      return { success: false, error: errorMessage };
+    }
     try {
       const user: UserDocument = await User.create(payload);
       return { success: true, result: user.profile };

@@ -13,6 +13,7 @@ const express_1 = require("express");
 const validation_1 = require("../../common/middlewares/validation");
 const auth_service_1 = require("./auth.service");
 const register_user_dto_1 = require("./dtos/register-user.dto");
+const login_dto_1 = require("./dtos/login.dto");
 class AuthController {
     constructor() {
         this.apiPrefix = '/auth';
@@ -20,16 +21,18 @@ class AuthController {
         this.intialize();
     }
     registerUser(req, res) {
-        const { username, password, profile, email, address } = req.body;
-        const payload = {
-            username,
-            authentication: { password, salt: 'tbc' },
-            profile,
-            email,
-            address
-        };
-        const result = auth_service_1.authService.register(payload);
-        res.send(result);
+        return __awaiter(this, void 0, void 0, function* () {
+            const { username, authentication, profile, email, address } = req.body;
+            const payload = {
+                username,
+                email,
+                authentication,
+                profile,
+                address
+            };
+            const result = yield auth_service_1.authService.register(payload);
+            res.send(result);
+        });
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,7 +41,7 @@ class AuthController {
     }
     intialize() {
         this.router.post(`${this.apiPrefix}/register`, (0, validation_1.validationMiddleware)(register_user_dto_1.RegisterUserDto), this.registerUser);
-        this.router.post(`${this.apiPrefix}/signin`, this.login);
+        this.router.post(`${this.apiPrefix}/signin`, (0, validation_1.validationMiddleware)(login_dto_1.LoginDto), this.login);
     }
 }
 const authCtrl = new AuthController();
