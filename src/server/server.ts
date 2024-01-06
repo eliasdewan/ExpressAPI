@@ -35,8 +35,8 @@ export default class Server {
 
     // Register Routing and Swagger
     this.app.use('/api', this.apiRouter);
-    registerRoutes(this.apiRouter);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+    registerRoutes(this.apiRouter);
   }
 
   start() {

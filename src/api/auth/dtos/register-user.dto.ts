@@ -41,6 +41,13 @@ export class AddressDto {
   postcode: string;
 }
 
+export class AuthenticationDto {
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
+  password: string;
+}
+
 export class RegisterUserDto {
   @IsNotEmpty()
   @IsString()
@@ -48,17 +55,15 @@ export class RegisterUserDto {
   @MaxLength(16)
   username: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, { message: 'password too weak' })
-  password: string;
-
-  @ValidateNested()
-  profile: UserProfileDto;
-
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
+  @ValidateNested()
+  authentication: AuthenticationDto;
+
+  @ValidateNested()
+  profile: UserProfileDto;
 
   @ValidateNested()
   address: AddressDto;

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+//import { Types } from 'mongoose';
 
 export interface UserProfile {
   firstName: string;
@@ -21,8 +21,7 @@ export interface Authentication {
   lastChanged: Date;
 }
 
-export interface User {
-  _id: Types.ObjectId;
+export interface BaseUser {
   username: string;
   email: string;
   mobile: string;
@@ -30,3 +29,14 @@ export interface User {
   address: Address;
   authentication: Authentication;
 }
+
+// User currently not being used anywhere
+// export interface User {
+//   _id: Types.ObjectId;
+//   username: string;
+//   email: string;
+//   mobile: string;
+//   profile: UserProfile;
+//   address: Address;
+//   authentication: Authentication;
+// }

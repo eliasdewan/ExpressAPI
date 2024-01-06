@@ -4,6 +4,7 @@ import { validationMiddleware } from '../../common/middlewares/validation';
 import { authService } from './auth.service';
 import { RegisterUserDto } from './dtos/register-user.dto';
 import { RegisterUserRequest } from './data/register-user.request';
+import { LoginDto } from './dtos/login.dto';
 
 class AuthController {
   public apiPrefix = '/auth';
@@ -20,12 +21,13 @@ class AuthController {
    * @param res Response
    */
   registerUser(req: Request, res: Response) {
-    const { username, password, profile, email, address } = req.body as RegisterUserDto;
+    const { username, authentication, profile, email, address } = req.body as RegisterUserDto;
+    //const payload:RegisterUserRequest = req.body as RegisterUserDto;
     const payload: RegisterUserRequest = {
       username,
-      authentication: { password, salt: 'tbc' },
-      profile,
       email,
+      authentication,
+      profile,
       address
     };
     const result = authService.register(payload);
@@ -84,7 +86,7 @@ class AuthController {
 
   private intialize() {
     this.router.post(`${this.apiPrefix}/register`, validationMiddleware(RegisterUserDto), this.registerUser);
-    this.router.post(`${this.apiPrefix}/signin`, this.login);
+    this.router.post(`${this.apiPrefix}/signin`, validationMiddleware(LoginDto), this.login);
     // this.router.post(`${this.apiPrefix}`, validationMiddleware(BookDto), this.addBook);
     // this.router.put(`${this.apiPrefix}/:id`, this.updateBook);
     // this.router.delete(`${this.apiPrefix}/:id`, this.removeBook);

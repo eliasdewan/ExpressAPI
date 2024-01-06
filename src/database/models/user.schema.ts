@@ -1,7 +1,13 @@
-import mongoose, { Document, Model, Schema, model } from 'mongoose';
+import mongoose, { Document, Model, Schema, Types, model } from 'mongoose';
 import { compare, compareSync, genSaltSync, hashSync } from 'bcrypt';
-import { Address, Authentication, UserProfile } from '../../api/auth/data/user';
+import { Address, Authentication, BaseUser, UserProfile } from '../../api/auth/data/user';
 
+// Newly created - using base user withouth the _id: base user same as Iuser
+export interface User extends BaseUser {
+  _id: Types.ObjectId;
+}
+
+// Not using iuser using BaseUser on user document
 export interface IUser {
   username: string;
   email: string;
@@ -11,7 +17,7 @@ export interface IUser {
   authentication: Authentication;
 }
 
-export interface UserDocument extends IUser, Document {}
+export interface UserDocument extends BaseUser, Document {}
 
 export interface UserModel extends Model<UserDocument> {
   userExist(username: string): UserDocument;
@@ -25,6 +31,10 @@ const UserSchema: Schema<UserDocument, UserModel> = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     mobile: String,
+    authentication: {
+      password: { type: String, required: true, selected: false },
+      lastChanged: { type: Date, selected: false }
+    },
     profile: {
       firstName: { type: String, required: true },
       middleName: String,
@@ -38,10 +48,6 @@ const UserSchema: Schema<UserDocument, UserModel> = new mongoose.Schema(
       county: String,
       city: { type: String, required: true },
       postcode: { type: String, required: true }
-    },
-    authentication: {
-      password: { type: String, required: true, selected: false },
-      lastChanged: { type: Date, selected: false }
     }
   },
   { timestamps: true }
