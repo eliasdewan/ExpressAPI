@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema, Types, model } from 'mongoose';
 import { compare, compareSync, genSaltSync, hashSync } from 'bcrypt';
-import { Address, Authentication, BaseUser, UserProfile } from '../../api/auth/data/user';
+import { BaseUser } from '../../api/auth/data/user';
 
 // Newly created - using base user withouth the _id: base user same as Iuser
 export interface User extends BaseUser {
@@ -8,14 +8,14 @@ export interface User extends BaseUser {
 }
 
 // Not using iuser using BaseUser on user document
-export interface IUser {
-  username: string;
-  email: string;
-  mobile: string;
-  profile: UserProfile;
-  address: Address;
-  authentication: Authentication;
-}
+// export interface IUser {
+//   username: string;
+//   email: string;
+//   mobile: string;
+//   profile: UserProfile;
+//   address: Address;
+//   authentication: Authentication;
+// }
 
 export interface UserDocument extends BaseUser, Document {}
 

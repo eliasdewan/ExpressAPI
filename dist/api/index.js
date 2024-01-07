@@ -7,10 +7,12 @@ exports.registerRoutes = void 0;
 const books_controller_1 = __importDefault(require("./books/books.controller"));
 const authors_controller_1 = __importDefault(require("./authors/authors.controller"));
 const auth_controller_1 = __importDefault(require("./auth/auth.controller"));
+const accounts_controller_1 = __importDefault(require("./accounts/accounts.controller"));
 const registerRoutes = (apiRouter) => {
     apiRouter.use(books_controller_1.default.router);
     apiRouter.use(authors_controller_1.default.router);
     apiRouter.use(auth_controller_1.default.router);
+    apiRouter.use(accounts_controller_1.default.router);
 };
 exports.registerRoutes = registerRoutes;
 //# sourceMappingURL=index.js.map

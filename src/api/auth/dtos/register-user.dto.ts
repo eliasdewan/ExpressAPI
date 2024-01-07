@@ -1,4 +1,13 @@
-import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+  ValidateNested
+} from 'class-validator';
 
 export class UserProfileDto {
   @IsString()
@@ -30,6 +39,7 @@ export class AddressDto {
   town: string;
 
   @IsString()
+  @IsOptional()
   county: string;
 
   @IsString()

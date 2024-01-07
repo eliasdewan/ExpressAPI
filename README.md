@@ -98,11 +98,50 @@ Server config types
 - > User.ts nesting all items as database schema
 - Removed unused inteface User, to replace with BaseUser without \_id and Types mongoose import
 - > Register-user request doesnt have salt and follwows BaseUser format
-- > Register-user DTO  follows the same nesting format as BaseUser
-- > User schema uses BaseUser and can also use User with _id . UserDocument extends BaseUser
+- > Register-user DTO follows the same nesting format as BaseUser
+- > User schema uses BaseUser and can also use User with \_id . UserDocument extends BaseUser
 
- # Extra added
+# Extra added
+
 - > Auth controller uses the validator method with loginDto
 - > registerUser uses userExist method to check if username or email alaready exists
 
 # Consider username and email lowercase
+
+# Schema design
+
+- > for referenced schema
+- UserDocument/UserPopulatedDocument -> UserBaseDocument -> { Mongoose.Document, User }
+- > for non referenced schema
+- UserDocument -> { Mongoose.Document, User }.
+- main **User** interface with basics user with types, optional and maaybe with union types too
+- converted to types for mongoose specific funtions, types\<Array> are also auto initailized , dont need optional
+- a **BaseUserDocument** extends document and user. _VIRTUAL_ and _METHODS_
+  - they Array<> and Map<> of user are converted to to Types.Arraay<> or map .
+  - schema creted from this or extension of this must implemnts its virtual and methods
+  - **UserDocument** extends BaseUserDocument with narrowed if union.
+    - Create separeate userdocument interface for other union type narrowing
+  - **UserModel** extends Model\<UserDocumnet> for the _statics_
+- export default model\<UserDocument, UserModel>("User", UserSchema)
+- userdocument for correct return type of user document instead of document and user model to identify methods
+## schema = Schema<UserDocument, UserModel>
+
+- pre\<UserDocument>('fn name', function) . so both userdocument and userdocument populated can be used
+- post\<Query<UserDocument, UserDocument>>('fn name', function) - for query type st
+
+# Special piece relational
+
+https://gist.github.com/WangHansen/f23f70b758bb9f38fc68414c809e765f#file-userschema-ts
+https://medium.com/@agentwhs/complete-guide-for-typescript-for-mongoose-for-node-js-8cc0a7e470c1
+
+- {type: Schema.Types.ObjectId, ref: "Company", required: true} reference to say this id references to an item in company collection.
+- in the interface use Types.ObjectId | Record<string, unknown>; to allow to use in two schenarios
+  - where you want just the id, maybe in **UserDocument** extending from base user document
+  - or you can have the attribute with a string key and value as {object from another schemaa?} in **UserDocumentPopulate**
+  - call a method that calls: return Promise/<UserDocumentPopulate> in model
+  - async function takes two parameters (this: Model<UserDocument>, id: string) , just need id as this is present
+  - returns this.findById(id).populate("collection").exec()
+  - generics is used so the model can extend userdocument and have a return type of userfocument populated for function generiic
+
+# sub schema. Do not inherit document for sub schema 
+> use top level interface to extend
