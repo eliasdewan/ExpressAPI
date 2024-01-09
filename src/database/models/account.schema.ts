@@ -61,7 +61,11 @@ AccountSchema.statics.findAddresses = function (this: Model<AccountDocument>, id
 
 AccountSchema.statics.addAddressToAccount = function (this: Model<AccountDocument>, id: string, addressId: string) {
   // eslint-disable-next-line prettier/prettier
-  return this.findByIdAndUpdate(id, { $push: { addresses: addressId } }, { returnDocument: 'after' }).populate('addresses');
+  return this.findOneAndUpdate(
+    { _id: id }, 
+    { $push: { addresses: addressId } },
+    { returnDocument: 'after' }
+  ).populate('addresses');
 };
 
 export const Account = model<AccountDocument, AccountModel>('Account', AccountSchema);

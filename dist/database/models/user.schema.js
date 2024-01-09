@@ -35,13 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const bcrypt_1 = require("bcrypt");
+const auth_role_enum_1 = require("../../api/auth/data/auth-role.enum");
 const UserSchema = new mongoose_1.default.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     mobile: String,
     authentication: {
         password: { type: String, required: true, selected: false },
-        lastChanged: { type: Date, selected: false }
+        lastChanged: { type: Date, selected: false },
+        role: { type: Number, default: auth_role_enum_1.AuthRole[auth_role_enum_1.AuthRole.User], enum: auth_role_enum_1.AuthRole }
     },
     profile: {
         firstName: { type: String, required: true },

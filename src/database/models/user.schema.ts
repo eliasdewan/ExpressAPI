@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema, Types, model } from 'mongoose';
 import { compare, compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { BaseUser } from '../../api/auth/data/user';
+import { AuthRole } from '../../api/auth/data/auth-role.enum';
 
 // Newly created - using base user withouth the _id: base user same as Iuser
 export interface User extends BaseUser {
@@ -17,7 +18,7 @@ export interface User extends BaseUser {
 //   authentication: Authentication;
 // }
 
-export interface UserDocument extends BaseUser, Document {}
+export interface UserDocument extends BaseUser, Document { }
 
 export interface UserModel extends Model<UserDocument> {
   userExist(username: string): UserDocument;
@@ -33,7 +34,8 @@ const UserSchema: Schema<UserDocument, UserModel> = new mongoose.Schema(
     mobile: String,
     authentication: {
       password: { type: String, required: true, selected: false },
-      lastChanged: { type: Date, selected: false }
+      lastChanged: { type: Date, selected: false },
+      role: { type: Number, default: AuthRole[AuthRole.User], enum: AuthRole }
     },
     profile: {
       firstName: { type: String, required: true },
