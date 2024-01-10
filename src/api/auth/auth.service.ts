@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { RegisterUserRequest } from './data/register-user.request';
 import { User, UserDocument } from '../../database/models/user.schema';
 import { LoginRequest } from './data/login';
+import { JWTPayload } from '../../types/jwt-payload';
 
 class AuthService {
   constructor() {
@@ -37,7 +38,7 @@ class AuthService {
       if (!passwordMatched) {
         return { success: false, status: 401, message: `sign in failed please try again` };
       }
-      const tokenPayload = {
+      const tokenPayload: JWTPayload = {
         id: user._id,
         email: user.email,
         ...user.profile

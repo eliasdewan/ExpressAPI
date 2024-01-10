@@ -19,6 +19,7 @@ export interface Address {
 export interface Authentication {
   password: string;
   lastChanged: Date;
+  role: number;
 }
 
 export interface BaseUser {

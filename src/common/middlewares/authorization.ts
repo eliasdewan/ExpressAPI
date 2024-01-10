@@ -1,24 +1,20 @@
 import { Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
-import { AunthenticatedRequest } from '../../types/authenticated-request';
+import { AuthRole } from '../../api/auth/data/auth-role.enum';
+import { HTTP_STATUSES } from '../constants/http-status';
 
-export const authorizeRole = (role: number) => (req: AunthenticatedRequest, res: Response, next: NextFunction) => {
-  const { user } = req;
-  if (!user || !user.startsWith('Bearer ')) {
-    return res.status(401).json({ success: false, message: 'Invalid or no authorizatioon.' });
+export const authorizeRole: any = (role: number) => (req: Request, res: Response, next: NextFunction) => {
+  const { user } = req as any;
+  const roles: number[] = Object.keys(AuthRole)
+    .filter((v) => !isNaN(+v))
+    .map((v) => +v);
+
+  if (roles.indexOf(user.authentication.role) === -1) {
+    return res.status(HTTP_STATUSES.FORBIDDEN_403).json({ sucess: false, mesasge: 'Forbidden! operation not allowed' });
   }
 
-  const token = user.replace('Bearer ', '');
-  if (!token) {
-    return res.status(401).json({ success: false, message: 'Missing aut token' });
+  if (user.authentication.role < role) {
+    return res.status(HTTP_STATUSES.FORBIDDEN_403).json({ sucess: false, mesasge: 'Forbidden! operation not allowed' });
   }
 
-  try {
-    const decoded = jwt.verify(token, (process.env as any).JWT_SECRET);
-    (req as any).user = decoded;
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(401).json({ success: false, message: 'Invalid auth token' });
-  }
+  next();
 };

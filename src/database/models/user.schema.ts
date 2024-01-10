@@ -22,7 +22,7 @@ export interface UserDocument extends BaseUser, Document { }
 
 export interface UserModel extends Model<UserDocument> {
   userExist(username: string): UserDocument;
-  findUser(): UserDocument;
+  findUser(id: string): UserDocument;
   searchUsers(): UserDocument[];
   comparePasswords(password: string, hash: string): Promise<boolean>;
 }
