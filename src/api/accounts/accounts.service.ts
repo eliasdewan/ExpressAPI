@@ -48,7 +48,16 @@ class AccountService {
       return { sucess: true, result: updatedAccount };
     } catch (error) {
       console.log(error);
-      return { success: false, message: 'Adding account address failed' };
+      return { success: false, message: 'Account update fialed' };
+    }
+  }
+  async removeAccount(id: string) {
+    try {
+      const removedAccount = await Account.removeAccount(id);
+      return { sucess: true, result: removedAccount };
+    } catch (error) {
+      console.log(error);
+      return { success: false, message: `Failed to remove account with id: ${id}` };
     }
   }
 }

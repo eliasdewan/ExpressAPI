@@ -68,7 +68,18 @@ class AccountsController {
   async updateAccount(req: Request, res: Response) {
     const { id } = req.params;
     const payload: updateAccountRequest = req.body;
+    console.log(payload);
+    console.log(typeof payload);
     res.send(await accountsService.updateAccount(id, payload));
+  }
+  /**
+   * @url api/accounts/{id}
+   * @param req Reqest
+   * @param res Response
+   */
+  async removeAccount(req: Request, res: Response) {
+    const { id } = req.params;
+    res.send(await accountsService.removeAccount(id));
   }
 
   private intialize() {
@@ -89,8 +100,13 @@ class AccountsController {
     //this.router.post(`${this.apiPrefix}/:id`, authorizeRole(AuthRole.Manager), this.updateAccount);
 
     // TODO:  ROLE: ADMIN -   remove an account
+    this.router.delete(`${this.apiPrefix}/:id`, this.removeAccount);
+
     // TODO:  ROLE: MANAGER - add route for removing address,
+    //this.router.delete(`${this.apiPrefix}/:id/:addressId`, this.removeAddress);
+
     // TODO:  ROLE: MANAGER - add route for updating address,
+    //this.router.post(`${this.apiPrefix}/:id/:addressId`, this.updateAddress);
   }
 }
 
