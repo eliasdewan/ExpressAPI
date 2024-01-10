@@ -19,3 +19,5 @@ export interface Address {
   city: string;
   postcode: string;
 }
+
+export interface updateAccountRequest extends Partial<CreateAccountRequest> {}

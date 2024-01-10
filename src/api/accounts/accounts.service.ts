@@ -1,6 +1,6 @@
 import { Address, AddressDocument } from '../../database/models/address.schema';
 import { Account, AccountDocument } from '../../database/models/account.schema';
-import { CreateAccountRequest, Address as CreateAddressRequest } from './data/account.request';
+import { CreateAccountRequest, Address as CreateAddressRequest, updateAccountRequest } from './data/account.request';
 
 class AccountService {
   constructor() {
@@ -36,6 +36,15 @@ class AccountService {
     try {
       const address = await Address.create(payload);
       const updatedAccount = await Account.addAddressToAccount(id, address._id.toString());
+      return { sucess: true, result: updatedAccount };
+    } catch (error) {
+      console.log(error);
+      return { success: false, message: 'Adding account address failed' };
+    }
+  }
+  async updateAccount(id: string, payload: updateAccountRequest) {
+    try {
+      const updatedAccount = await Account.updateAccount(id, payload);
       return { sucess: true, result: updatedAccount };
     } catch (error) {
       console.log(error);

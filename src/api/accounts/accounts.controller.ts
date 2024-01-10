@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { validationMiddleware } from '../../common/middlewares/validation';
 import { createAccountDto } from './data/account.dto';
 import { accountsService } from './accounts.service';
-import { CreateAccountRequest, Address } from './data/account.request';
+import { CreateAccountRequest, Address, updateAccountRequest } from './data/account.request';
 import { AddressDto } from '../auth/dtos/register-user.dto';
 import { AuthRole } from '../auth/data/auth-role.enum';
 import { authorizeRole } from '../../common/middlewares/authorization';
@@ -60,6 +60,17 @@ class AccountsController {
     res.send(await accountsService.addAccountAddress(id, payload));
   }
 
+  /**
+   * @url api/accounts/{id}
+   * @param req Reqest
+   * @param res Response
+   */
+  async updateAccount(req: Request, res: Response) {
+    const { id } = req.params;
+    const payload: updateAccountRequest = req.body;
+    res.send(await accountsService.updateAccount(id, payload));
+  }
+
   private intialize() {
     this.router.get(`${this.apiPrefix}`, authorizeRole(AuthRole.User), this.getAllAccounts);
     this.router.get(`${this.apiPrefix}/:id`, authorizeRole(AuthRole.User), this.getAccount); // populate with addresses
@@ -74,6 +85,9 @@ class AccountsController {
       this.addAccountAddress
     );
     // TODO:  ROLE: MANAGER - update account
+    this.router.post(`${this.apiPrefix}/:id`, this.updateAccount);
+    //this.router.post(`${this.apiPrefix}/:id`, authorizeRole(AuthRole.Manager), this.updateAccount);
+
     // TODO:  ROLE: ADMIN -   remove an account
     // TODO:  ROLE: MANAGER - add route for removing address,
     // TODO:  ROLE: MANAGER - add route for updating address,

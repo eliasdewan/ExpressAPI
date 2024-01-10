@@ -14,6 +14,7 @@ export interface AccountModel extends Model<AccountDocument> {
   getAccount(id: string): AccountDocument;
   findAddresses(id: string): AccountDocument;
   addAddressToAccount(id: string, addressId: string): AccountDocument;
+  updateAccount(id: string, newProperties: Partial<AccountDocument>): AccountDocument;
   // AccountExist(businessName: string): AccountDocument;
   // findAccount(): AccountDocument;
   // searchAccounts(): AccountDocument[];
@@ -58,11 +59,18 @@ AccountSchema.statics.searchAccounts = function (this: Model<AccountDocument>, q
 AccountSchema.statics.findAddresses = function (this: Model<AccountDocument>, id: string) {
   return this.findById(id).populate('addresses');
 };
+AccountSchema.statics.updateAccount = function (
+  this: Model<AccountDocument>,
+  id: string,
+  newProperties: Partial<AccountDocument>
+) {
+  return this.findByIdAndUpdate(id, newProperties, { returnDocument: 'after' }).populate('addresses');
+};
 
 AccountSchema.statics.addAddressToAccount = function (this: Model<AccountDocument>, id: string, addressId: string) {
   // eslint-disable-next-line prettier/prettier
   return this.findOneAndUpdate(
-    { _id: id }, 
+    { _id: id },
     { $push: { addresses: addressId } },
     { returnDocument: 'after' }
   ).populate('addresses');
