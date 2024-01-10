@@ -20,4 +20,4 @@ export interface Address {
   postcode: string;
 }
 
-export interface updateAccountRequest extends Partial<CreateAccountRequest> {}
+export interface UpdateAccountRequest extends Partial<CreateAccountRequest> {}

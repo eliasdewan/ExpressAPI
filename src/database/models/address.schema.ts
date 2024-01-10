@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types, model } from 'mongoose';
+import mongoose, { Document, Model, Schema, Types, model } from 'mongoose';
 
 export interface IAddress {
   building: string;
@@ -13,7 +13,11 @@ export interface AddressDocument extends IAddress, Document {
   _id?: Types.ObjectId;
 }
 
-const AddressSchema: Schema<AddressDocument> = new mongoose.Schema({
+export interface AddressModel extends Model<AddressDocument> {
+  removeAddress(id: string): Types.ObjectId;
+}
+
+const AddressSchema: Schema<AddressDocument, AddressModel> = new mongoose.Schema({
   building: { type: String, required: true },
   street: { type: String, required: true },
   town: { type: String, required: true },
@@ -22,4 +26,8 @@ const AddressSchema: Schema<AddressDocument> = new mongoose.Schema({
   postcode: { type: String, required: true }
 });
 
-export const Address = model<AddressDocument>('Address', AddressSchema);
+AddressSchema.statics.removeAddress = function (this: Model<AddressDocument>, id: string) {
+  return this.deleteOne({ _id: id });
+};
+
+export const Address = model<AddressDocument, AddressModel>('Address', AddressSchema);

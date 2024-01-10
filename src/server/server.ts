@@ -8,6 +8,7 @@ import { errorHandler } from './middlewares/error.middleware';
 import { registerRoutes } from '../api';
 import swaggerOutput from '../swagger-output.json';
 import mongoose from 'mongoose';
+import morganMiddleware from './middlewares/logging.middleware';
 
 export default class Server {
   app: express.Application;
@@ -23,6 +24,7 @@ export default class Server {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
     this.app.use(cors());
+    this.app.use(morganMiddleware);
     this.app.use(express.static('public'));
 
     // Custom middlewares

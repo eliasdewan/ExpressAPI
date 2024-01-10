@@ -34,6 +34,7 @@ const error_middleware_1 = require("./middlewares/error.middleware");
 const api_1 = require("../api");
 const swagger_output_json_1 = __importDefault(require("../swagger-output.json"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const logging_middleware_1 = __importDefault(require("./middlewares/logging.middleware"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -42,6 +43,7 @@ class Server {
         this.app.use(body_parser_1.default.urlencoded({ extended: true }));
         this.app.use(body_parser_1.default.json());
         this.app.use((0, cors_1.default)());
+        this.app.use(logging_middleware_1.default);
         this.app.use(express_1.default.static('public'));
         this.app.get('/favicon.ico', (_, res) => res.sendStatus(204));
         this.app.use((req, res, next) => {

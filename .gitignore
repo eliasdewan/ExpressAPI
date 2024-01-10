@@ -1,3 +1,9 @@
-first 
-node_modules
-dist/**/*
+# Folders to ignore
+/node_modules
+/dist
+
+# Config files to ignore
+.env
+
+# Log files to ignore
+

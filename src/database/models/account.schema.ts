@@ -17,6 +17,7 @@ export interface AccountModel extends Model<AccountDocument> {
 
   updateAccount(id: string, newProperties: Partial<AccountDocument>): AccountDocument;
   removeAccount(id: string): AccountDocument;
+  removeAccountAddress(id: string, addressId: string): AccountDocument;
   // AccountExist(businessName: string): AccountDocument;
   // findAccount(): AccountDocument;
   // searchAccounts(): AccountDocument[];
@@ -64,6 +65,10 @@ AccountSchema.statics.findAddresses = function (this: Model<AccountDocument>, id
 
 AccountSchema.statics.removeAccount = function (this: Model<AccountDocument>, id: string) {
   return this.findOneAndDelete({ _id: id }).populate('addresses');
+};
+AccountSchema.statics.removeAccountAddress = function (this: Model<AccountDocument>, id: string, addressId: string) {
+  return this.findOneAndUpdate({ _id: id }, { $pull: { addresses: addressId } });
+  //remove the id from the list of addresses
 };
 
 AccountSchema.statics.updateAccount = function (
